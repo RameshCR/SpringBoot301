@@ -9,7 +9,9 @@ import com.restaurant.management.entity.Restaurant;
 import com.restaurant.management.enums.RestaurantSearchProperty;
 
 public interface RestaurantService {
+
 	/**
+	 * Gets the restaurant based on input passed
 	 * 
 	 * @param property
 	 * @param values
@@ -17,5 +19,4 @@ public interface RestaurantService {
 	 * @return
 	 */
 	Page<Restaurant> getRestaurants(RestaurantSearchProperty property, List<String> values, Pageable pageRequest);
-
 }

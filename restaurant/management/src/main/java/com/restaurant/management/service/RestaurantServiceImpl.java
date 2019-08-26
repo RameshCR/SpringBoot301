@@ -13,15 +13,12 @@ import com.restaurant.management.entity.Restaurant;
 import com.restaurant.management.enums.RestaurantSearchProperty;
 import com.restaurant.management.repository.CustomRestaurantRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 @Transactional(readOnly = true)
 public class RestaurantServiceImpl implements RestaurantService {
 
-	@Autowired private CustomRestaurantRepository customRestaurantRepository;
-	@Autowired private RestaurantServiceImpl self;
+	@Autowired	private CustomRestaurantRepository customRestaurantRepository;
+	@Autowired	private RestaurantServiceImpl self;
 
 	@Override
 	public Page<Restaurant> getRestaurants(RestaurantSearchProperty property, List<String> values,
@@ -29,13 +26,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return get(property, values, pageRequest);
 	}
 
-	private Page<Restaurant> get(RestaurantSearchProperty property, List<String> values, Pageable pageRequest) {
+	public Page<Restaurant> get(RestaurantSearchProperty property, List<String> values, Pageable pageRequest) {
 		return self.getFromCache(property, values, pageRequest);
 	}
 
 	@Cacheable("restaurants")
-	public Page<Restaurant> getFromCache(RestaurantSearchProperty property, List<String> values,
-			Pageable pageRequest) {
+	public Page<Restaurant> getFromCache(RestaurantSearchProperty property, List<String> values, Pageable pageRequest) {
 		return customRestaurantRepository.searchRestaurant(property, values, pageRequest);
 	}
 

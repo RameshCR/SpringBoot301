@@ -21,7 +21,7 @@ public class Restaurant implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private String name;
 	private String location;
 	private Integer distance;
