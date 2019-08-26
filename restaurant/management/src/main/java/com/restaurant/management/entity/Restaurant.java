@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.restaurant.management.enums.CuisineType;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,16 +20,16 @@ public class Restaurant implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Integer id;
+	private Integer id;
 	
-	protected String name;
-	protected String location;
-	protected Integer distance;
-	protected BigDecimal budget;
-	protected BigDecimal rating;
-	protected CuisineType cuisineType;
-	protected String contactNo;
-	protected boolean isActive = true;
+	private String name;
+	private String location;
+	private Integer distance;
+	private BigDecimal budget;
+	private BigDecimal rating;
+	private String cuisineType;
+	private String contactNo;
+	private boolean isActive = true;
 
 	@Override
 	public int hashCode() {

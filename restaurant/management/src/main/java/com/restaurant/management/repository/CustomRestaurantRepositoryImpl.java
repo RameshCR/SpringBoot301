@@ -35,8 +35,17 @@ public class CustomRestaurantRepositoryImpl extends CustomRepository implements 
 			case LOCATION:
 				queryString.append(" WHERE r.location IN (:values) ");
 				break;
+			case DISTANCE:
+				queryString.append(" WHERE r.distance IN (:values) ");
+				break;
+			case BUDGET:
+				queryString.append(" WHERE r.budget IN (:values) ");
+				break;
 			case RATING:
-				queryString.append(" WHERE r.rating IN = (:values) ");
+				queryString.append(" WHERE r.rating IN (:values) ");
+				break;
+			case CUISINE:
+				queryString.append(" WHERE r.cuisineType IN (:values) ");
 				break;
 			default:
 				break;

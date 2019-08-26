@@ -26,6 +26,6 @@ public class RestaurantSearchController {
 	@GetMapping("/searchRestaurant")
 	public Page<RestaurantResource> searchRestaurants(@RequestParam(required = false) RestaurantSearchProperty searchProperty, @RequestParam(required = false) List<String> values, Pageable pageRequest) {
 		log.debug("searching restaurant based on name: {} ", searchProperty);
-		return restaurantService.searchRestaurant(searchProperty, values, pageRequest).map(RestaurantResource::new);
+		return restaurantService.getRestaurants(searchProperty, values, pageRequest).map(RestaurantResource::new);
 	}
 }

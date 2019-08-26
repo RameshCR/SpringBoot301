@@ -9,7 +9,6 @@ import com.restaurant.management.entity.Restaurant;
 import com.restaurant.management.enums.RestaurantSearchProperty;
 
 public interface RestaurantService {
-
 	/**
 	 * 
 	 * @param property
@@ -17,6 +16,6 @@ public interface RestaurantService {
 	 * @param pageRequest
 	 * @return
 	 */
-	Page<Restaurant> searchRestaurant(RestaurantSearchProperty property, List<String> values, Pageable pageRequest);
+	Page<Restaurant> getRestaurants(RestaurantSearchProperty property, List<String> values, Pageable pageRequest);
 
 }

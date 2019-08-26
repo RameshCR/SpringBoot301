@@ -14,23 +14,25 @@ import lombok.Setter;
 public class RestaurantResource implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer restaurantId;
 	private String restaurantName;
 	private String location;
 	private Integer distance;
 	private BigDecimal budget;
 	private BigDecimal rating;
-	private RestaurantMenuComponent menu;
-	
-	public RestaurantResource(Restaurant restaurant){
+	private String cuisineType;
+	private String contactNo;
+
+	public RestaurantResource(Restaurant restaurant) {
 		this.restaurantId = restaurant.getId();
 		this.restaurantName = restaurant.getName();
 		this.location = restaurant.getLocation();
 		this.distance = restaurant.getDistance();
 		this.budget = restaurant.getBudget();
 		this.rating = restaurant.getRating();
-	//	this.menu.getMainCourse() = restaurant.getMenu();
+		this.contactNo = restaurant.getContactNo();
+		this.cuisineType = restaurant.getCuisineType();
 	}
 
 }
