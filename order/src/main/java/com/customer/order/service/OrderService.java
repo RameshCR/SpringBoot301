@@ -12,9 +12,9 @@ public interface OrderService {
 	 * 
 	 * @param orders
 	 * @param customer
-	 * @return 
+	 * @return
 	 */
-	OrderDetail placeOrder(PlaceOrderReource orders, Customer customer);	
+	OrderDetail placeOrder(PlaceOrderReource orders, Customer customer);
 
 	/**
 	 * Updates the customer order
@@ -23,16 +23,16 @@ public interface OrderService {
 	 * @param orderId
 	 * @param orderResource
 	 */
-	OrderDetail updateOrder(Integer customerId, Integer orderId, PlaceOrderReource orderResource);
-	
+	void updateOrder(Integer customerId, Integer orderId, PlaceOrderReource orderResource);
+
 	/**
 	 * Cancels the customer order
 	 * 
 	 * @param customerId
 	 * @param orderId
 	 */
-	OrderDetail cancelOrder(Integer customerId, Integer orderId);
-	
+	void cancelOrder(Integer customerId, Integer orderId);
+
 	/**
 	 * Gets all active order for customer
 	 * 
@@ -40,7 +40,7 @@ public interface OrderService {
 	 * @return
 	 */
 	List<OrderDetail> getAllOrderDetails(Customer customer);
-	
+
 	/**
 	 * Gets order detail
 	 * 

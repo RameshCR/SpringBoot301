@@ -21,9 +21,8 @@ import com.customer.order.resource.PlaceOrderReource;
 @Transactional(readOnly = true)
 public class OrderServiceImpl implements OrderService {
 
-	@Autowired
-	private OrderDetailRepository orderDetailRepository;
-	@Autowired RestaurantRepository restaurantRepository;
+	@Autowired private OrderDetailRepository orderDetailRepository;
+	@Autowired private RestaurantRepository restaurantRepository;
 
 	@Override
 	@Transactional
@@ -50,29 +49,27 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public OrderDetail updateOrder(Integer customerId, Integer orderId, PlaceOrderReource orderResource) {
+	public void updateOrder(Integer customerId, Integer orderId, PlaceOrderReource orderResource) {
 		OrderDetail orderDetail = orderDetailRepository.findActiveOrderByCustomerIdAndOrderId(customerId, orderId);
 		Restaurant restaurant = restaurantRepository.findById(orderResource.getRestaurantId()).get();
-		orderDetail.setRestaurant(restaurant);	
+		orderDetail.setRestaurant(restaurant);
 		orderDetail.setOrderDate(LocalDateTime.now());
 		orderDetail.setOrderedItems(orderResource.getItems());
 		orderDetailRepository.save(orderDetail);
-		return orderDetail;
 	}
 
 	@Override
 	@Transactional
-	public OrderDetail cancelOrder(Integer customerId, Integer orderId) {
+	public void cancelOrder(Integer customerId, Integer orderId) {
 		OrderDetail orderDetail = orderDetailRepository.findActiveOrderByCustomerIdAndOrderId(customerId, orderId);
 		orderDetail.setActive(false);
 		orderDetail.setOrderStatus(OrderStatus.CANCELLED);
-		return orderDetail;
+		orderDetailRepository.save(orderDetail);
 	}
 
 	@Override
 	public OrderDetail getOrderDetatail(Integer orderId) {
-		return Optional.ofNullable(orderDetailRepository.findById(orderId)).get()
-				.orElseGet(OrderDetail::new);
+		return Optional.ofNullable(orderDetailRepository.findById(orderId)).get().orElseGet(OrderDetail::new);
 	}
 
 }

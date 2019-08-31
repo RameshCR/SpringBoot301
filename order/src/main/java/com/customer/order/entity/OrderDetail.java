@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.Type;
 
 import com.customer.order.enums.OrderStatus;
@@ -25,7 +27,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 @ApiModel(description = "Used for Order Details")
 public class OrderDetail implements Serializable {
 
@@ -53,7 +57,8 @@ public class OrderDetail implements Serializable {
 
 	private Integer foodItemCount;
 	private boolean isActive = true;
-	@Enumerated(EnumType.STRING) private OrderStatus orderStatus;
+	@Enumerated(EnumType.STRING)
+	private OrderStatus orderStatus;
 
 	@Column(name = "items")
 	@Type(type = "com.customer.order.entity.OrderedItems$OrderedItemsType")
@@ -67,13 +72,7 @@ public class OrderDetail implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((orderStatus == null) ? 0 : orderStatus.hashCode());
-		result = prime * result + ((restaurant == null) ? 0 : restaurant.hashCode());
-		return result;
+		return new HashCodeBuilder().append(getId()).toHashCode();
 	}
 
 	@Override
@@ -85,24 +84,7 @@ public class OrderDetail implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderDetail other = (OrderDetail) obj;
-		if (customer == null) {
-			if (other.customer != null)
-				return false;
-		} else if (!customer.equals(other.customer))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (orderStatus != other.orderStatus)
-			return false;
-		if (restaurant == null) {
-			if (other.restaurant != null)
-				return false;
-		} else if (!restaurant.equals(other.restaurant))
-			return false;
-		return true;
+		return new EqualsBuilder().append(getId(), other.getId()).isEquals();
 	}
 
 	@Override
