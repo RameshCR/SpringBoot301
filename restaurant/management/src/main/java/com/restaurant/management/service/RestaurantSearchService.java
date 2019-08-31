@@ -8,10 +8,10 @@ import org.springframework.data.domain.Pageable;
 import com.restaurant.management.entity.Restaurant;
 import com.restaurant.management.enums.RestaurantSearchProperty;
 
-public interface RestaurantService {
+public interface RestaurantSearchService {
 
 	/**
-	 * Gets the restaurant based on input passed
+	 * Gets restaurants based on search input passed
 	 * 
 	 * @param property
 	 * @param values

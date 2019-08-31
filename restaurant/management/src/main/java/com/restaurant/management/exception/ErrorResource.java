@@ -1,17 +1,18 @@
 package com.restaurant.management.exception;
 
+import java.util.List;
+
 import com.restaurant.management.enums.ApiErrorCode;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ErrorResource {
 
-	private int status;
-	private String code;
+	private int status; // The http status code
+	private String code; // The internal, readable code
 	private String message;
+	private List<ErrorDetailComponent> details;
 
 	public ErrorResource(int status, String code, String message) {
 		this.status = status;
@@ -28,6 +29,11 @@ public class ErrorResource {
 	public ErrorResource(ApiErrorCode apiError, String message) {
 		this(apiError);
 		this.message = message;
+	}
+
+	public ErrorResource(ApiErrorCode apiError, List<ErrorDetailComponent> details) {
+		this(apiError);
+		this.details = details;
 	}
 
 }

@@ -6,7 +6,9 @@ public enum ApiErrorCode {
 
 	
 	DEFAULT_400(400, "badRequest", "This is a bad request."),
-	DEFAULT_500(500, "internalServerError", "internal server error");
+	DEFAULT_500(500, "internalServerError", "internal server error"),
+	BAD_PARAMETER(400, "badParameter", "One or more parameters were invalid."),
+	MISSING_PARAMETER(400, "missingParameter", "One or more required parameters are missing.");
 
 	private final int httpStatus;
 	private final String code;

@@ -15,10 +15,10 @@ import com.restaurant.management.repository.CustomRestaurantRepository;
 
 @Service
 @Transactional(readOnly = true)
-public class RestaurantServiceImpl implements RestaurantService {
+public class RestaurantSearchServiceImpl implements RestaurantSearchService {
 
 	@Autowired	private CustomRestaurantRepository customRestaurantRepository;
-	@Autowired	private RestaurantServiceImpl self;
+	@Autowired	private RestaurantSearchServiceImpl self;
 
 	@Override
 	public Page<Restaurant> getRestaurants(RestaurantSearchProperty property, List<String> values,

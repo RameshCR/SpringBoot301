@@ -22,14 +22,15 @@ import org.springframework.data.domain.PageRequest;
 
 import com.restaurant.management.entity.Restaurant;
 import com.restaurant.management.enums.RestaurantSearchProperty;
-import com.restaurant.management.service.RestaurantServiceImpl;
+import com.restaurant.management.exception.ApiException;
+import com.restaurant.management.service.RestaurantSearchServiceImpl;
 
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class RestaurantSearchControllerTest {
 
 	@Mock
-	private RestaurantServiceImpl restaurantService;
+	private RestaurantSearchServiceImpl restaurantService;
 
 	@InjectMocks
 	private RestaurantSearchController restaurantSearchController;
@@ -57,20 +58,30 @@ public class RestaurantSearchControllerTest {
 		PageRequest pageRequest = PageRequest.of(1, 5);
 		Mockito.when(restaurantService.getRestaurants(ArgumentMatchers.any(RestaurantSearchProperty.class),
 				ArgumentMatchers.anyList(), ArgumentMatchers.any(PageRequest.class))).thenReturn(restaurants);
-		assertNotNull(restaurantSearchController.searchRestaurants(RestaurantSearchProperty.NAME, values, pageRequest));
+		assertNotNull(restaurantSearchController.searchRestaurants(RestaurantSearchProperty.NAME.getDescription(), values, pageRequest));
 	}
 
-	@Test
-	public void restaurantSearchControllerNegativeTest() {
+	@Test(expected = ApiException.class)
+	public void restaurantSearchControllerNegativeTest1() {
 		List<String> values = new ArrayList<>();
 		values.add("MTR");
 		PageRequest pageRequest = PageRequest.of(1, 5);
 		Mockito.when(restaurantService.getRestaurants(ArgumentMatchers.any(RestaurantSearchProperty.class),
 				ArgumentMatchers.anyList(), ArgumentMatchers.any(PageRequest.class)))
 				.thenReturn(new PageImpl<>(new ArrayList<>()));
-		assertNotNull(restaurantSearchController.searchRestaurants(RestaurantSearchProperty.NAME, values, pageRequest));
+		restaurantSearchController.searchRestaurants("test", values, pageRequest);
 	}
-
+	
+	@Test(expected = ApiException.class)
+	public void restaurantSearchControllerNegativeTest2() {
+		List<String> values = new ArrayList<>();
+		values.add("MTR");
+		PageRequest pageRequest = PageRequest.of(1, 5);
+		Mockito.when(restaurantService.getRestaurants(ArgumentMatchers.any(RestaurantSearchProperty.class),
+				ArgumentMatchers.anyList(), ArgumentMatchers.any(PageRequest.class)))
+				.thenReturn(new PageImpl<>(new ArrayList<>()));
+		restaurantSearchController.searchRestaurants(null, values, pageRequest);
+	}
 	@Test
 	public void testEqualsAndHashCode() {
 		Restaurant restaurant1 = new Restaurant();

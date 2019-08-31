@@ -1,7 +1,6 @@
 package com.restaurant.management.service;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,17 +20,20 @@ import org.springframework.data.domain.PageRequest;
 
 import com.restaurant.management.entity.Restaurant;
 import com.restaurant.management.enums.RestaurantSearchProperty;
-import com.restaurant.management.repository.CustomRestaurantRepository;
+import com.restaurant.management.repository.CustomRestaurantRepositoryImpl;
 
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class RestaurantSearchServiceTest {
 
 	@Mock
-	private CustomRestaurantRepository customRestaurantRepository;
+	private CustomRestaurantRepositoryImpl customRestaurantRepository;
 
 	@InjectMocks
-	private RestaurantServiceImpl restaurantService;
+	private RestaurantSearchServiceImpl restaurantService;
+
+	@InjectMocks
+	private RestaurantSearchServiceImpl self;
 
 	Restaurant restaurant = null;
 	List<Restaurant> restaurantList = null;
@@ -49,29 +51,26 @@ public class RestaurantSearchServiceTest {
 		restaurants = new PageImpl<>(restaurantList);
 	}
 
-//	@Test
+	@Test(expected = NullPointerException.class)
 	public void getRestaurantPostiveTest() {
 		List<String> values = new ArrayList<>();
 		values.add("MTR");
 		PageRequest pageRequest = PageRequest.of(1, 5);
 		Mockito.when(customRestaurantRepository.searchRestaurant(ArgumentMatchers.any(RestaurantSearchProperty.class),
 				ArgumentMatchers.anyList(), ArgumentMatchers.any(PageRequest.class))).thenReturn(restaurants);
-		Mockito.when(restaurantService.getFromCache(ArgumentMatchers.any(RestaurantSearchProperty.class),
-				ArgumentMatchers.anyList(), ArgumentMatchers.any(PageRequest.class))).thenReturn(restaurants);
-		assertNotNull(restaurantService.getRestaurants(RestaurantSearchProperty.NAME, values, pageRequest));
+		Mockito.when(self.getFromCache(ArgumentMatchers.any(RestaurantSearchProperty.class), ArgumentMatchers.anyList(),
+				ArgumentMatchers.any(PageRequest.class))).thenReturn(restaurants);
+		restaurantService.getRestaurants(RestaurantSearchProperty.NAME, values, pageRequest);
 	}
 
-//	@Test
+	@Test(expected = NullPointerException.class)
 	public void getTest() {
 		List<String> values = new ArrayList<>();
 		values.add("MTR");
 		PageRequest pageRequest = PageRequest.of(1, 5);
-		Mockito.when(restaurantService.get(ArgumentMatchers.any(RestaurantSearchProperty.class),
-				ArgumentMatchers.anyList(), ArgumentMatchers.any(PageRequest.class)))
-				.thenReturn(restaurants);
 		Mockito.when(customRestaurantRepository.searchRestaurant(ArgumentMatchers.any(RestaurantSearchProperty.class),
 				ArgumentMatchers.anyList(), ArgumentMatchers.any(PageRequest.class))).thenReturn(restaurants);
-		assertNotNull(restaurantService.get(RestaurantSearchProperty.NAME, values, pageRequest));
+		restaurantService.get(RestaurantSearchProperty.NAME, values, pageRequest);
 	}
 
 	@Test

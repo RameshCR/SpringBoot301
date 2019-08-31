@@ -16,11 +16,11 @@ import com.restaurant.management.enums.RestaurantSearchProperty;
 @Repository
 public class CustomRestaurantRepositoryImpl extends CustomRepository implements CustomRestaurantRepository {
 
-	@Autowired
-	private RestaurantRepository restaurantRepository;
+	@Autowired private RestaurantRepository restaurantRepository;
 
 	public Page<Restaurant> searchRestaurant(RestaurantSearchProperty property, List<String> values,
 			Pageable pageRequest) {
+		System.out.println("Inside CustomRestaurantRepositoryImpl method()");
 		if (property == null) {
 			List<Restaurant> restaurantList = (List<Restaurant>) restaurantRepository.findAll();
 			return new PageImpl<>(restaurantList, pageRequest, restaurantList.size());
